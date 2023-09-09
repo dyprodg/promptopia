@@ -32,11 +32,12 @@ const Form = ({ type ,post ,setPost ,submitting ,handleSubmit }) => {
             <span className='font-normal'>(#product, #webdevelopment, #idea)</span>
           </span>
           <input
-          value={post.prompt}
-          onChange={(e) => setPost ({ ...post, tag: e.target.value })}
-          placeholder="#tag"
-          required
-          className="form_input"
+            value={post.tag}
+            onChange={(e) => setPost({ ...post, tag: e.target.value })}
+            type='text'
+            placeholder='#Tag'
+            required
+            className='form_input'
           />
           </label>
           <div className='flex-end mx-3 mb-5 gap-4'>
@@ -49,7 +50,7 @@ const Form = ({ type ,post ,setPost ,submitting ,handleSubmit }) => {
              disabled={submitting}
              className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'
             >
-              {submitting ? `${tyep}...` : type}
+              {submitting ? `${type}...` : type}
             </button>
           </div>
         </form>
