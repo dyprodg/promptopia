@@ -41,9 +41,9 @@ const Nav = () => {
             className='black_btn'>
               Create Post
             </Link>
-            <buton type="button" onClick={signOut} className="outline_btn">
+            <button type="button" onClick={signOut} className="outline_btn">
               Sign Out
-            </buton>
+            </button>
 
             <Link href="/profile">
               <Image
@@ -102,7 +102,7 @@ const Nav = () => {
                     >
                       Create Prompt
                     </Link>
-                    <botton
+                    <button
                       type='button'
                       onClick={() => {
                         setToggleDropdown(false);
@@ -111,7 +111,7 @@ const Nav = () => {
                       className="mt-5 w-full black_btn"
                     >
                       Sign Out
-                    </botton>
+                    </button>
                   </div>
                 )}
               

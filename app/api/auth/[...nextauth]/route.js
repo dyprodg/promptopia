@@ -13,35 +13,45 @@ const handler = NextAuth({
   ],
   callbacks: {
     async session({ session }) {
-      // store the user id from MongoDB to session
-      const sessionUser = await User.findOne({ email: session.user.email });
-      session.user.id = sessionUser._id.toString();
-
-      return session;
-    },
-    async signIn({ account, profile, user, credentials }) {
       try {
         await connectToDB();
 
-        // check if user already exists
-        const userExists = await User.findOne({ email: profile.email });
+        const sessionUser = await User.findOne({ email: session.user.email });
+        if (sessionUser) {
+          session.user.id = sessionUser._id.toString();
+        } else {
+          throw new Error('User not found in the database');
+        }
 
-        // if not, create a new document and save user in MongoDB
-        if (!userExists) {
-          await User.create({
+        return session;
+      } catch (error) {
+        console.error("Error retrieving user from the database for session:", error.message);
+        return null; // Return null to destroy the session and log the user out
+      }
+    },
+    async signIn({ account, profile }) {
+      try {
+        await connectToDB();
+
+        let user = await User.findOne({ email: profile.email });
+
+        if (!user) {
+          user = new User({
             email: profile.email,
             username: profile.name.replace(" ", "").toLowerCase(),
             image: profile.picture,
           });
+
+          await user.save();
         }
 
-        return true
+        return true;
       } catch (error) {
-        console.log("Error checking if user exists: ", error.message);
-        return false
+        console.error("Error during sign-in:", error.message);
+        return false;
       }
     },
   }
-})
+});
 
-export { handler as GET, handler as POST }
+export { handler as GET, handler as POST };
