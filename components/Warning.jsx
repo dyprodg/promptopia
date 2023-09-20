@@ -1,11 +1,18 @@
-import React from 'react'
+'use client'
+import React, { useEffect } from 'react';
 
 const Warning = () => {
-  return (
-    <div className='text-xs'>
-        <h1>**Website Under Development - Use with Caution** <br></br>
+  
+  useEffect(() => {
+    if (!localStorage.getItem('alertShown')) {
+      alert("This website is a showcase of my coding skills and is not a fully operational product!!! The use of this website is at own risk!!");
+      localStorage.setItem('alertShown', 'true');
+    }
+  }, []);
 
-Welcome! This website is a showcase of my coding skills and is not a fully operational product!!!</h1>
+  
+  return (
+    <div className=''>
     </div>
   )
 }
